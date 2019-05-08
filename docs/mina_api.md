@@ -142,3 +142,9 @@ response : {    // id不在数据库中
     工业设计,动手能力
     环境工程,化学
     ...
+
+
+
+
+### ps
+vscode中使用git提交至github：前提，github帐号已经登录了,新的repo要git init，然后git remote add origin (repository的ssh)
