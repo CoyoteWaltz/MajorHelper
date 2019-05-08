@@ -1,0 +1,7 @@
+flask
+flask-sqlalchemy
+mysqlclient
+flask-script
+flask-sqlacodegen   # 快速生成ORM model？？
+flask-cors
+flask-migrate
