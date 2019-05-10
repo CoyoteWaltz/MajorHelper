@@ -1,4 +1,4 @@
-#!/home/coyotewaltz/Programming/PythonFiles/major_project/venv/bin/python
+#!/home/coyotewaltz/Programming/Projects/major_project/venv/bin/python
 
 import sys
 import getopt

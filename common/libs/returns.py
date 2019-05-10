@@ -7,7 +7,7 @@ def success_return(data):
         {
             "msg" : "请求成功",
             "data" : data,
-            "code" : 200
+            "code" : 2001
         }
     )
 
@@ -16,12 +16,12 @@ def failed_return(msg):
     return jsonify(
         {
             "msg" : msg,
-            "data" : "",
-            "code" : 4
+            "data" : None,
+            "code" : 4001
         }
     )
 
-def db_return():
+def db_failed_return():
     # 数据库操作错误
     return jsonify(
         {
