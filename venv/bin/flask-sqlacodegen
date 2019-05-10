@@ -1,4 +1,4 @@
-#!/home/coyotewaltz/Programming/PythonFiles/major_project/venv/bin/python3.6
+#!/home/coyotewaltz/Programming/Projects/major_project/venv/bin/python3.6
 # -*- coding: utf-8 -*-
 import re
 import sys
