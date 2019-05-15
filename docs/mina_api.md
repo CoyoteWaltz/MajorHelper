@@ -145,10 +145,12 @@ data = None
 response : {    // 返回大类{学院{专业}}
     data : {        // 这个数据有点庞大
         "category" : [  // list
-            "理工大类" : {
-                "college" : [        // list
-                    "计算机工程与科学学院" : {
-                        "major" : [  // list
+            {
+                "cat_name" : "理工大类",
+                "colleges" : [        // list
+                    {
+                        "col_name" : "计算机工程与科学学院",
+                        "majors" : [    // list
                             {
                                 "m_id" : 5,
                                 "m_name" : "计算机科学与技术"
@@ -158,39 +160,39 @@ response : {    // 返回大类{学院{专业}}
                                 "m_name" : "智能科学与技术"
                             },
                             ...
-                        ],
-                    "环境科学与工程学院" : {
-                        "major" : [
+                        ]
+                    },                  //一个字典为列表中的一个元素
+                    {
+                        "col_name" : "环境科学与工程学院",
+                        "majors" : [    // list
                             {
-                                "m_id" : 15,
+                                "m_id" : 5,
                                 "m_name" : "环境工程"
                             },
                             {
-                                "m_id" : 13,
+                                "m_id" : 42,
                                 "m_name" : "化学工程与工艺"
                             },
                             ...
-                        ],
+                        ]
+                    },
+                    ...
+                ]
+            },
+            {
+                "cat_name" : "人文大类",
+                "colleges" : [
+                    {
+                        "col_name" : "xxx",
+                        "majors" : [
+                            ...
+                        ]
                     }
                 ]
             },
-            "人文大类" : {
-                "college" : [
-                    "xxx" : {
-                        "major" : [
-                            {
-                                ...
-                            }
-                        ]
-                    },
-                    "yyy" : {
-                        "major" : [
-                            {
-                                ...
-                            },
-                        ]
-                    }
-                ]
+            {
+                "cat_name" : "经管大类",
+                "colleges" : []
             }
         ]
     },

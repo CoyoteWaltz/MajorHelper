@@ -11,6 +11,7 @@ api = Redprint('locate')
 @api.route('/', methods=['GET'])
 def locate():
     # 返回所有的兴趣标签
+    
 
     return '返回所有兴趣标签 id + 内容'
 
