@@ -4,6 +4,8 @@ from flask import request, jsonify
 from common.libs.redprint import Redprint
 '''import models里面的东西进行数据库操作'''
 
+from common.models.models import Interest, Major
+from common.libs.returns import *
 
 api = Redprint('locate')
 
@@ -11,9 +13,18 @@ api = Redprint('locate')
 @api.route('/', methods=['GET'])
 def locate():
     # 返回所有的兴趣标签
-    
+    interests = Interest.query.all()
+    i_info = []
+    for i in interests:
+        i_info.append({
+            "i_id" : i.id, "i_content" : i.i_name
+        })
+    return success_return({
+        'interests' : i_info
+    })
 
-    return '返回所有兴趣标签 id + 内容'
+
+
 
 @api.route('/search', methods=['GET', 'POST'])
 def search():

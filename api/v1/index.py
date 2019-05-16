@@ -5,11 +5,10 @@ from application import db, app
 
 api = Redprint('index')
 
+
+# index页面?干嘛呢？
 @api.route('/')
 def index():
-    from sqlalchemy import text
-    sql = text('select * from class')
-    res = db.engine.execute(sql)
-    for row in res:
-        app.logger.info(row)
+    
+    
     return 'hello world'
