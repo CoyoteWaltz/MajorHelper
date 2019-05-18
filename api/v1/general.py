@@ -69,13 +69,14 @@ def general():
                 })
 
             cat_list.append({
-                "cat_name" : cat.c_name,
+                "cat_name" : cat.c_name[0] + cat.c_name[2] if cat.id != 1 else cat.c_name[0] + cat.c_name[1],
                 "cat_id" : cat.id,
                 "colleges" : college_list
             })
         data["category"] = cat_list
 
         return success_return(data)
+
     except Exception as e:
         return db_failed_return()
 
