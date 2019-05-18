@@ -141,11 +141,43 @@ def majors_to_db():
 
 
 
+def interest_rel_major_to_db():
+    # 标签-专业关系表入库
+    file_name = os.path.join(os.getcwd(), 'common/tasks/major2interest.csv')
 
+    import pandas as pd
+    data = pd.read_csv(file_name)
+    with MyDataBase(
+        host=db_info['host'],
+        port=db_info['port'],
+        user=db_info['user'],
+        password=db_info['password'],
+        database=db_info['database'],
+    ) as cs:
+        select_i_sql = 'select id from interest where i_name="{i_name}"'
+        select_m_sql = 'select id from major where m_name="{m_name}"'
+        insert_sql = 'insert into interest2major values({id}, ({i_id}), ({m_id}))'
+        # 兴趣-专业
+        for d in data.itertuples(index=True):
+            # d[0]=name ,d[1]=tag
+            try:
+                print(d)
+                cs.execute(insert_sql.format(
+                    id=d[0] + 1,
+                    i_id=select_i_sql.format(i_name=d[2].strip()),
+                    m_id=select_m_sql.format(m_name=d[1].strip())
+                ))
+            except Exception as e:
+                
+                print(d[1], d[2], "失败")
+                print(str(e))
+            # m = cs.fetchone()
+            # print(m)
 
 
 
 if __name__ == '__main__':
     # interest_to_db()
     # man_input_rank()
-    majors_to_db()
+    # majors_to_db()
+    interest_rel_major_to_db()

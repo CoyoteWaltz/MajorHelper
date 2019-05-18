@@ -38,6 +38,17 @@ class CtyMjRk(db.Model):
     mj = db.relationship('Major', primaryjoin='CtyMjRk.mj_id == Major.id', backref='cty_mj_rks')
 
 
+    def get_major_rank_dict(self):
+
+        return {
+            "m_name" : self.mj.m_name,
+            "f_rank" : self.first_precent,
+            "s_rank" : self.second_precent,
+            "t_rank" : self.third_precent
+        }
+
+
+
 class Interest(db.Model):
     __tablename__ = 'interest'
 
@@ -70,3 +81,13 @@ class Major(db.Model):
 
     category = db.relationship('Category', primaryjoin='Major.category_id == Category.id', backref='majors')
     college = db.relationship('College', primaryjoin='Major.college_id == College.id', backref='majors')
+
+    def get_dict_info(self):
+
+        return {
+            "m_name" : self.m_name,
+            "intro" : self.intro,
+            "course" : self.course,
+            "salary" : self.salary,
+            "rank_precent" : self.rank_precent
+        }

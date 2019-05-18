@@ -38,3 +38,12 @@ def db_failed_return():
             "code" : 4000
         }
     )
+
+def db_not_found():
+    # 数据库操作错误
+    return jsonify(
+        {
+            "msg" : "数据库中未找到",
+            "code" : 4004
+        }
+    )

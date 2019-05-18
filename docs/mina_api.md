@@ -155,6 +155,7 @@ response : {    // 返回大类{学院{专业}}
         "category" : [  // list
             {
                 "cat_name" : "理工大类",
+                "cat_id" : 3,
                 "colleges" : [        // list
                     {
                         "col_name" : "计算机工程与科学学院",
@@ -189,6 +190,7 @@ response : {    // 返回大类{学院{专业}}
             },
             {
                 "cat_name" : "人文大类",
+                "cat_id" : 2,
                 "colleges" : [
                     {
                         "col_name" : "xxx",
@@ -200,6 +202,7 @@ response : {    // 返回大类{学院{专业}}
             },
             {
                 "cat_name" : "经管大类",
+                "cat_id" : 1,
                 "colleges" : []
             }
         ]
@@ -214,10 +217,7 @@ response : {    // 返回大类{学院{专业}}
 ```
 // 当前大类的专业近三年排位百分比
 method : "GET"
-url : "http://{{server ip}}:8080/v1/general/rank"
-data = {
-    "c_id" : 1              // 当前类别的id
-}
+url : "http://{{server ip}}:8080/v1/general/rank/<int:cat_id>"  //当前大类id
 response : {    // 返回专业近三年排位
         data : [
             {
