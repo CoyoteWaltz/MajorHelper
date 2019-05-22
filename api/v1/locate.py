@@ -117,4 +117,7 @@ def search():
 
     if request.method == 'POST':
         # 通过 get_json() 接受字典
-        pass
+        data = request.get_json()
+        print(data)
+        
+        return "hahah"
