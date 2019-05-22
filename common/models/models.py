@@ -10,14 +10,14 @@ from application import db
 class Category(db.Model):
     __tablename__ = 'category'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True) #, nullable=False, default=1)
     c_name = db.Column(db.String(20), nullable=False, unique=True)
 
 
 class College(db.Model):
     __tablename__ = 'college'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True) #, nullable=False, default=1)
     c_name = db.Column(db.String(30), nullable=False, unique=True)
     category_id = db.Column(db.ForeignKey('category.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
 
@@ -27,7 +27,7 @@ class College(db.Model):
 class CtyMjRk(db.Model):
     __tablename__ = 'cty_mj_rk'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True) #, nullable=False, default=1)
     cty_id = db.Column(db.ForeignKey('category.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     mj_id = db.Column(db.ForeignKey('major.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     first_precent = db.Column(db.Float)
@@ -52,14 +52,14 @@ class CtyMjRk(db.Model):
 class Interest(db.Model):
     __tablename__ = 'interest'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True) #, nullable=False, default=1)
     i_name = db.Column(db.String(20), nullable=False, unique=True)
 
 
 class Interest2major(db.Model):
     __tablename__ = 'interest2major'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True) #, nullable=False, default=1)
     interest_id = db.Column(db.ForeignKey('interest.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     major_id = db.Column(db.ForeignKey('major.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
 
@@ -70,17 +70,21 @@ class Interest2major(db.Model):
 class Major(db.Model):
     __tablename__ = 'major'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True) #, nullable=False, default=1)
     m_name = db.Column(db.String(20), nullable=False, unique=True)
     college_id = db.Column(db.ForeignKey('college.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
     category_id = db.Column(db.ForeignKey('category.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
-    intro = db.Column(db.String(1000), nullable=False, server_default=db.FetchedValue())
+    intro = db.Column(db.String(1000))#, server_default=db.FetchedValue())
     course = db.Column(db.String(800))
     salary = db.Column(db.String(200))
     rank_precent = db.Column(db.String(50))
+    enroll_num = db.Column(db.Integer)      # 招收人数
 
     category = db.relationship('Category', primaryjoin='Major.category_id == Category.id', backref='majors')
     college = db.relationship('College', primaryjoin='Major.college_id == College.id', backref='majors')
+
+
+    
 
     def get_dict_info(self):
 
@@ -89,5 +93,7 @@ class Major(db.Model):
             "intro" : self.intro,
             "course" : self.course,
             "salary" : self.salary,
-            "rank_precent" : self.rank_precent
+            "rank_precent" : self.rank_precent,
+            "enroll_num" : self.enroll_num
         }
+        

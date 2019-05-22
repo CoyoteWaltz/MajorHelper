@@ -50,9 +50,7 @@ method : "GET"        // 兴趣标签是通过GET
 url : "http://{{server ip}}:8080/v1/locate/search"
 
 data : {
-    "fid" : 2,      // 第一个兴趣标签的编号
-    "sid" : 5,      // 第一个兴趣标签的编号
-    "tid" : 4,      // 第一个兴趣标签的编号
+    tags : [2, 4, 5],
 }
 response : {
     data = {    // 返回兴趣匹配到的部分专业
@@ -119,6 +117,7 @@ response : {    // id正确，返回详细信息
         "course" : "内容为字符串",
         "salary" : "文段",  //null
         "rank_precent" : "30.12"  //字符串
+        "enroll_num" : 23         //int
     },
     msg : "ok", // 没有失败的情况
     code: 2000, // 业务自定义状态码
@@ -265,3 +264,8 @@ response : {    // 返回专业近三年排位
 
 ### ps
 vscode中使用git提交至github：前提，github帐号已经登录了,新的repo要git init，然后git remote add origin (repository的ssh)
+
+mysql数据库备份shell:mysqldump -u root -p major_db > major_db.sql
+数据库init:python manage.py db init
+数据库migrate:python manage.py db migrate -m "leave a message"
+migrate之后upgrade:python manage.py db upgrade

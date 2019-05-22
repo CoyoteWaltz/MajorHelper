@@ -5,6 +5,8 @@ from common.libs.returns import *
 
 from common.models.models import Major, Category, College, CtyMjRk
 
+import re
+
 api = Redprint('general')
 
 '''
@@ -62,12 +64,11 @@ def general():
                         "m_id" : m.id,
                         "m_name" : m.m_name
                     })
-
+                
                 college_list.append({
-                    "col_name" : col.c_name,
+                    "col_name" : re.sub('\(.*?\)', '', col.c_name),
                     "majors" : major_list
                 })
-
             cat_list.append({
                 "cat_name" : cat.c_name[0] + cat.c_name[2] if cat.id != 1 else cat.c_name[0] + cat.c_name[1],
                 "cat_id" : cat.id,
