@@ -72,7 +72,7 @@ response : {
 
 ```
 method : "POST"        // 搜索框用表单from提交
-url : "http://{{server ip}}:8080/v1/locate/search"
+url : "http://{{server ip}}:8080/v1/locate/search/"
 data = {
     "content" : "xxxx"
 }
@@ -237,6 +237,77 @@ response : {    // 返回专业近三年排位
 }
 ```
 
+### 3.信息发布
+
+#### 3.1 获取所有板块(4个)
+
+```
+// 返回板块名称和id
+method : "GET"
+url : "http://{{server ip}}:8080/v1/bulletin/"  
+response : {    // 返回专业近三年排位
+        data : [
+            {
+                "b_id" : 2,
+                "b_name" : xxx,
+                "pub_time" : 2018-09-02
+            },
+            {
+                "b_id" : 3,
+                "b_name" : xxx,
+                "pub_time" : 2018-09-02
+            },
+        ]
+    msg : "ok",
+    code: 2000, // 业务自定义状态码
+}
+```
+
+#### 3.2 获取文章列表
+
+```
+// 获取文章列表
+method : "GET"
+url : "http://{{server ip}}:8080/v1/bulletin/article_list/<int:b_id>"   //通过板块id获取板块内的文章  
+response : {    // 返回板块中的文章id, title
+        data : [            //是个list
+            {
+                "a_id" : 2,
+                "title" : "xxx",
+                "pub_time" : "2018-09-02",        //发布日期 格式 yyyy-mm-dd
+            },
+            {
+                "a_id" : 5,
+                "title" : "xxx",
+                "pub_time" : "2018-09-02",        //发布日期 格式 yyyy-mm-dd
+            },
+        ]
+    msg : "ok",
+    code: 2000, // 业务自定义状态码
+}
+```
+
+#### 3.3 获取版块内文章详情
+
+```
+// 获取文章
+method : "GET"
+url : "http://{{server ip}}:8080/v1/bulletin/article/<int:a_id>"  
+response : {    // 返回专业近三年排位
+        data : {
+            "title" : "xxxx",
+            "pub_time" : "yyyy-mm-dd",
+            "author" : "xxxxx",
+            "img_link" : "/images/majorhelper/图片名, /images/majorhelper/图片名,",        //图片链接，逗号分隔，链接都加在主域名www.coyoo.xyz的后面,图片名包含.jpg/.png/.jpeg
+            "file_link" : "/前缀待定/majorhelper/file.pdf, /前缀待定/file.pdf",       //下载文档链接，逗号分隔
+            "content" : "文段"
+        }
+    msg : "ok",
+    code: 2000, // 业务自定义状态码
+}
+```
+
+
 
 ## 数据库所需文档格式
 
@@ -265,7 +336,11 @@ response : {    // 返回专业近三年排位
 ### ps
 vscode中使用git提交至github：前提，github帐号已经登录了,新的repo要git init，然后git remote add origin (repository的ssh)
 
-mysql数据库备份shell:mysqldump -u root -p major_db > major_db.sql
-数据库init:python manage.py db init
+mysql数据库备份整个库shell:mysqldump -u root -p major_db > major_db.sql
+
+mysql恢复数据库:mysql -uroot -p major_db < major_db.sql
+
+
+<!-- 数据库init:python manage.py db init
 数据库migrate:python manage.py db migrate -m "leave a message"
-migrate之后upgrade:python manage.py db upgrade
+migrate之后upgrade:python manage.py db upgrade -->

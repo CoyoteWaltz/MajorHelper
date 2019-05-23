@@ -78,6 +78,29 @@ CREATE TABLE cty_mj_rk(
     ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 comment='大类-专业-近三年排名，为了专业一览的分流排位';
 
+DROP TABLE IF EXISTS board;
+
+CREATE TABLE board(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    b_name VARCHAR(80) UNIQUE NOT NULL COMMENT '板块名称',
+    publish_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    intro VARCHAR(200) COMMENT '板块介绍'
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment='发布页面的板块';
+
+DROP TABLE IF EXISTS article;
+
+CREATE TABLE article(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(80) UNIQUE NOT NULL COMMENT '板块名称',
+    publish_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '发布时间',
+    content VARCHAR(8888) COMMENT '文章内容',
+    author VARCHAR(30) COMMENT '作者',
+    board_id INT NULL COMMENT '所属板块',
+    img_link VARCHAR(8888) COMMENT '图片链接，逗号分隔',
+    file_link VARCHAR(8888) COMMENT '所需下载文档链接，逗号分隔',
+    CONSTRAINT fk_article_board FOREIGN KEY (board_id) REFERENCES board(id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 comment='文章的表';
 
 
 
