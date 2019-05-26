@@ -268,7 +268,7 @@ response : {    // 返回专业近三年排位
 ```
 // 获取文章列表
 method : "GET"
-url : "http://{{server ip}}:8080/v1/bulletin/article_list/<int:b_id>"   //通过板块id获取板块内的文章  
+url : "http://{{server ip}}:8080/v1/bulletin/article_list/<string:b_name>"   //通过板块id获取板块内的文章  
 response : {    // 返回板块中的文章id, title
         data : [            //是个list
             {
@@ -298,8 +298,8 @@ response : {    // 返回专业近三年排位
             "title" : "xxxx",
             "pub_time" : "yyyy-mm-dd",
             "author" : "xxxxx",
-            "img_link" : "/images/majorhelper/图片名, /images/majorhelper/图片名,",        //图片链接，逗号分隔，链接都加在主域名www.coyoo.xyz的后面,图片名包含.jpg/.png/.jpeg
-            "file_link" : "/前缀待定/majorhelper/file.pdf, /前缀待定/file.pdf",       //下载文档链接，逗号分隔
+            "img_link" : [img_name1, img_name2, img_name3]   // 图片前缀:/images/majorhelper/<a_id>/img_name(12312.png)
+            "file_link" : [file_name1, file_name2]  // 图片前缀:/files/majorhelper/<a_id>/file_name(dsdf.pdf)   注意 没有连接的时候 前端会接受到null
             "content" : "文段"
         }
     msg : "ok",

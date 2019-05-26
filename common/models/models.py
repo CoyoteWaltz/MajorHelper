@@ -97,3 +97,41 @@ class Major(db.Model):
             "enroll_num" : self.enroll_num
         }
         
+
+class Article(db.Model):
+    __tablename__ = 'article'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(80), nullable=False, unique=True)
+    publish_time = db.Column(db.DateTime, nullable=False, server_default=db.FetchedValue())
+    content = db.Column(db.Text)
+    author = db.Column(db.String(30))
+    board_id = db.Column(db.ForeignKey('board.id'), index=True)
+    img_link = db.Column(db.String(1000))
+    file_link = db.Column(db.String(1000))
+
+    board = db.relationship('Board', primaryjoin='Article.board_id == Board.id', backref='articles')
+
+    def get_article_info(self):
+        # 获取格式化信息
+        separate_links = []
+        separate_links.append
+        return {
+            "title" : self.title,
+            "pub_time" : self.publish_time.strftime("%Y-%m-%d"),
+            "author" : self.author,
+            "img_link" : self.img_link if self.img_link is None else self.img_link.split(","),
+            "file_link" : self.file_link if self.file_link is None else self.file_link.split(","),
+            "content" : self.content
+        }
+
+# 专业辅修 转专业 学院活动 海外实习
+class Board(db.Model):
+    __tablename__ = 'board'
+
+    id = db.Column(db.Integer, primary_key=True)
+    b_name = db.Column(db.String(80), nullable=False, unique=True)
+    publish_time = db.Column(db.DateTime, nullable=False, server_default=db.FetchedValue())
+    intro = db.Column(db.String(200))
+
+    

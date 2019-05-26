@@ -174,10 +174,39 @@ def interest_rel_major_to_db():
             # m = cs.fetchone()
             # print(m)
 
+def salary_to_db():
+    file_name = os.path.join(os.getcwd(), 'common/tasks/salary.csv')
+    import pandas as pd
+    data = pd.read_csv(file_name)
+    with MyDataBase(
+        host=db_info['host'],
+        port=db_info['port'],
+        user=db_info['user'],
+        password=db_info['password'],
+        database=db_info['database'],
+    ) as cs:
+        select_sql = 'select id from major where m_name="{name}"'
+        update_sql = 'update major set salary="{salary}" where id={m_id}'
+        for row in data.itertuples(index=False):
+            cs.execute(select_sql.format(
+                name=row[0]
+            ))
+            m_id = cs.fetchone()
+            if not m_id:
+                print(row[0], " not in db")
+            else:
+                # print(m_id)
+                cs.execute(update_sql.format(
+                    salary=row[1],
+                    m_id=m_id[0]
+                ))
+            # print(row[0], row[1])
 
+    
 
 if __name__ == '__main__':
     # interest_to_db()
     # man_input_rank()
     # majors_to_db()
-    interest_rel_major_to_db()
+    # interest_rel_major_to_db()
+    salary_to_db()

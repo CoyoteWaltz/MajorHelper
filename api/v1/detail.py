@@ -7,7 +7,6 @@ from common.libs.returns import *
 
 api = Redprint('/detail')
 
-
 @api.route('/<int:m_id>', methods=['GET'])  # 如果不用指定的方法会405直接错误
 def detail(m_id):
     # 返回查询到的专业的信息
