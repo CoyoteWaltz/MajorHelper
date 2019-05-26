@@ -40,25 +40,8 @@ def locate():
 def search():
     # 接受前端三个标签id，返回相关专业的信息 m_id, m_name
     if request.method == 'GET':
-        # f_id = request.values.get('f_id')
-        # s_id = request.values.get('s_id')
-        # t_id = request.values.get('t_id')
-        # print(request.headers)
         id_list = eval(str(request.values.get('tags')))
-        # id_list = eval(str(request.values.get('tags')).decode('utf8'))
-        # d = request.values.get('tags')
-        # print(d)
-        # id_list = random.sample(range(1, 26), 3)
-        # print("id_list", id_list)
-        # print(type(f_id))
-        # id_list = []
-        # if f_id is not None:
-        #     id_list.append(f_id)            
-        # if s_id is not None:
-        #     id_list.append(s_id)            
-        # if t_id is not None:
-        #     id_list.append(t_id)            
-
+        
         major = []
         # 专业集合的list
         major_sets = []
@@ -113,10 +96,11 @@ def search():
             return success_return(major)
 
         # 纠结选择专业返回 上限5个
+        majors = []
         if len(intersection) >= 5:
-            major = random.sample(intersection, 5)
+            majors = random.sample(intersection, 5)
         elif len(intersection) >= 3:
-            major = list(intersection)
+            majors = list(intersection)
         else:
             # 不足3个就随机抽取两个差集中的 从major_sets中随机抽一个集合
             # 然后和intersection做差集，从差集中随机选一个
@@ -128,8 +112,13 @@ def search():
                 #可能出现差集为空的情况
                     rand_m = random.choice(list(sub_set))
                     if m_id != rand_m[0]:
-                        major.append(rand_m)
+                        majors.append(rand_m)
                         m_id = rand_m[0]
+        
+        for m in majors:
+            major.append(
+                {"m_id" : m[0], "m_name" : m[1]}
+            )
 
         return success_return(major)
 
