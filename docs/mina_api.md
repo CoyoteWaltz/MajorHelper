@@ -268,7 +268,10 @@ response : {    // 返回专业近三年排位
 ```
 // 获取文章列表
 method : "GET"
-url : "http://{{server ip}}:8080/v1/bulletin/article_list/<string:b_name>"   //通过板块id获取板块内的文章  
+url : "http://{{server ip}}:8080/v1/bulletin/article_list/"   
+data = {            //通过传递板块名获得文章列表
+    "b_name" : "xxxx"
+}
 response : {    // 返回板块中的文章id, title
         data : [            //是个list
             {

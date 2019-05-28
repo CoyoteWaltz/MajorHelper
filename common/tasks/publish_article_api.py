@@ -26,8 +26,7 @@ def save_to_db(info):
         password=db_info['password'],
         database=db_info['database'],
     ) as cs:
-        insert_sql = "insert into article values(null, '{title}',\
-             null, '{content}', '{author}', {b_id}, {i_link}, {f_link}"
+        insert_sql = "insert into article values(null, '{title}', null, '{content}', '{author}', {b_id}, {i_link}, {f_link})"
         select_b_sql = "select id from board where b_name='{b_name}'"
         cs.execute(select_b_sql.format(b_name=info['a_board']))
         b_id = cs.fetchone()
@@ -36,14 +35,26 @@ def save_to_db(info):
             return
         else:
             print(b_id)
+        # if info['img_name'] == 'null':
+        sql = insert_sql.format(
+            title=info['a_title'],
+            content=info['a_content'],
+            author=info['a_author'],
+            b_id=b_id[0],
+            i_link=info['img_name'],             #'null',# if info['img_name'] is None else "'{}'".format(info['img_name']),
+            f_link=info['file_name']             #'null' #if info['file_name'] is None else "'{}'".format(info['file_name'])
+        )
+        print(sql)
+      
         cs.execute(insert_sql.format(
             title=info['a_title'],
             content=info['a_content'],
             author=info['a_author'],
             b_id=b_id[0],
-            i_link="'%s'"%info['img_name'] if info['img_name'] != '' else 'null',
-            f_link="'%s'"%info['file_name'] if info['file_name'] != '' else 'null'
+            i_link=info['img_name'],             #'null',# if info['img_name'] is None else "'{}'".format(info['img_name']),
+            f_link=info['file_name'] 
         ))
+    
         
     print("成功存入数据库")
     
@@ -63,10 +74,24 @@ def main():
         a_info["img_name"] = input("图片名(用英文逗号分隔)")
         # a_info["file_name"] = input("文件名(用英文逗号分隔)").split(',')
         a_info["file_name"] = input("文件名(用英文逗号分隔)")
+        if a_info["img_name"] == '':
+            a_info["img_name"] = 'null'
+        else:
+            a_info["img_name"] = "'%s'" % a_info["img_name"]
+
+        if a_info["file_name"] == '':
+            a_info["file_name"] = 'null'
+        else:
+            a_info["file_name"] = "'%s'" % a_info["file_name"]
         
         submit = input("以上，确认吗？(y/n)").strip()
         if submit.lower() == 'y':
-            save_to_db(a_info)
+            try:
+                save_to_db(a_info)
+            except Exception as e:
+                print(str(e))
+                print("出现错误，添加失败")
+                count -= 1
 
             submit = input("还要继续吗?(y/n)").strip()
             if submit.lower() == 'n':

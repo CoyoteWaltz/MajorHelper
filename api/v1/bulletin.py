@@ -6,18 +6,20 @@ from common.libs.returns import *
 
 api = Redprint('bulletin')
 
-
 @api.route('/', methods=['GET', 'POST'])
 def bulletin():
+    boards = Board.query.all()
 
     return '发布'
 
-@api.route('/article_list/<string:b_name>', methods=['GET', 'POST'])
-def article_list(b_name):
-    b_id = Board.query.filer_by(b_name=b_name).first()
-    if not b_id:
+@api.route('/article_list/', methods=['GET', 'POST'])
+def article_list():
+    # print("bbbbb", b_name)#.decode('unicode_escape'))
+    b_name = request.values.get('b_name')
+    board = Board.query.filter_by(b_name=b_name).first()
+    if not board:
         return failed_return("数据库中未找到")
-    all_article  = Article.query.filter_by(board_id=b_id).all()
+    all_article  = Article.query.filter_by(board_id=board.id).all()
     a_list = []
     for at in all_article:
         a_list.append({
@@ -26,7 +28,6 @@ def article_list(b_name):
             "pub_time" : at.publish_time.strftime("%Y-%m-%d")
         })
     return success_return(a_list)
-
 
 
 @api.route('/article/<int:a_id>', methods=['GET', 'POST'])
