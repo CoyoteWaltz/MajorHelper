@@ -35,7 +35,7 @@ CREATE TABLE `article` (
   UNIQUE KEY `title` (`title`),
   KEY `fk_article_board` (`board_id`),
   CONSTRAINT `fk_article_board` FOREIGN KEY (`board_id`) REFERENCES `board` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='文章的表';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='文章的表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `article` (
 
 LOCK TABLES `article` WRITE;
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
-INSERT INTO `article` VALUES (1,'test','2019-05-26 12:24:14','sdfsdfsdfsdf','coyoo',NULL,NULL,NULL);
+INSERT INTO `article` VALUES (5,'上海大学2019本科生转专业方案','2019-05-28 13:16:35','详见转专业计划招收人数和实施方案pdf文件','上海大学社会学院',3,NULL,'19zhuanzhuanyezhaoshengjihuashu.pdf,19zhuanzhuanyeshishifangan.pdf');
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -71,7 +71,7 @@ CREATE TABLE `board` (
 
 LOCK TABLES `board` WRITE;
 /*!40000 ALTER TABLE `board` DISABLE KEYS */;
-INSERT INTO `board` VALUES (1,'test','2019-05-23 13:31:56',NULL),(2,'专业辅修','2019-05-26 12:44:52',NULL),(3,'转专业','2019-05-26 12:44:59',NULL),(4,'学院活动','2019-05-26 12:45:04',NULL),(5,'海外实习','2019-05-26 12:45:10',NULL);
+INSERT INTO `board` VALUES (2,'专业辅修','2019-05-26 12:44:52',NULL),(3,'转专业','2019-05-26 12:44:59',NULL),(4,'学院活动','2019-05-26 12:45:04',NULL),(5,'海外实习','2019-05-26 12:45:10',NULL);
 /*!40000 ALTER TABLE `board` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,4 +259,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-26 21:34:21
+-- Dump completed on 2019-05-28 21:43:12
