@@ -18,7 +18,7 @@ def article_list():
     b_name = request.values.get('b_name')
     board = Board.query.filter_by(b_name=b_name).first()
     if not board:
-        return failed_return("数据库中未找到")
+        return db_not_found()
     all_article  = Article.query.filter_by(board_id=board.id).all()
     a_list = []
     for at in all_article:
@@ -34,5 +34,5 @@ def article_list():
 def article(a_id):
     article = Article.query.filter_by(id=a_id).first()
     if not article:
-        return failed_return("数据库中未找到")
+        return db_not_found()
     return success_return(article.get_article_info())

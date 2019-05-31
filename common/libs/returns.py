@@ -26,7 +26,7 @@ def failed_return(msg):
         {
             "msg" : msg,
             "data" : None,
-            "code" : 4001
+            "code" : 4004
         }
     )
 
@@ -44,6 +44,6 @@ def db_not_found():
     return jsonify(
         {
             "msg" : "数据库中未找到",
-            "code" : 4004
+            "code" : 4001
         }
     )

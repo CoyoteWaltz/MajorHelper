@@ -30,7 +30,7 @@ def locate():
             'interests' : i_info
         })
 
-        return failed_return("数据库中无内容")
+        return db_not_found()
 
     except Exception as e:
         return db_failed_return()
@@ -41,7 +41,8 @@ def search():
     # 接受前端三个标签id，返回相关专业的信息 m_id, m_name
     if request.method == 'GET':
         id_list = eval(str(request.values.get('tags')))
-        
+        if not id_list:
+            return failed_return("未接受到数据")
         major = []
         # 专业集合的list
         major_sets = []
@@ -52,7 +53,6 @@ def search():
             in_m = Interest2major.query.filter_by(interest_id=i).all()
             # print("in_m", in_m)
             # 放进集合中
-
             for fim in in_m:
                 # print("add=>>", fim.major.m_name)
                 major_set.add((fim.major.id, fim.major.m_name))
@@ -63,6 +63,9 @@ def search():
         # print("for循环结束")
         # print("major_sets+++>>>", major_sets)
         # print("len--->", len(major_sets))
+        # 集合一顿操作为空，说明没有从数据库中找到东西，传来的数据有问题
+        if not major_sets:
+            return db_not_found()
         # 处理集合的list
         intersection = major_sets[0].copy()     # 这里一定要copy不然会被覆盖，或者换一个方法
         for m_set in major_sets[1:]:
@@ -78,7 +81,7 @@ def search():
             # 按照长度降序
             if not sorted_set:
                 # 什么都没搜到
-                return failed_return("数据库中未找到")
+                return db_not_found()
 
             set_len = len(sorted_set)
             for i in range(5):
@@ -90,6 +93,7 @@ def search():
                 # else:
                 #     return failed_return("dsfsdf")
                 m_dict = {"m_id" : rand_m[0], "m_name" : rand_m[1]}
+            # print("m_dict>>>>", m_dict)
                 if m_dict not in major:
                     major.append(m_dict)
 
@@ -104,6 +108,8 @@ def search():
         else:
             # 不足3个就随机抽取两个差集中的 从major_sets中随机抽一个集合
             # 然后和intersection做差集，从差集中随机选一个
+            majors = list(intersection)
+            print("len < 3")
             m_id = -1
             for _ in range(2):
 
@@ -114,7 +120,7 @@ def search():
                     if m_id != rand_m[0]:
                         majors.append(rand_m)
                         m_id = rand_m[0]
-        
+        # print('majors>>', majors)
         for m in majors:
             major.append(
                 {"m_id" : m[0], "m_name" : m[1]}
@@ -150,7 +156,7 @@ def search():
                 major_set.add((i.major.id, i.major.m_name))
         
         if not major_set:
-            return failed_return("未能匹配")
+            return db_not_found()
         major_list = []
         for m_id, m_name in major_set:
             major_list.append({
