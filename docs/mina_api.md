@@ -336,9 +336,6 @@ response : {    // 返回专业近三年排位
 ### ps
 vscode中使用git提交至github：前提，github帐号已经登录了,新的repo要git init，然后git remote add origin (repository的ssh)
 
-mysql数据库备份整个库shell:mysqldump -u root -p major_db > major_db.sql
-
-mysql恢复数据库:mysql -uroot -p major_db < major_db.sql
 
 
 <!-- 数据库init:python manage.py db init
